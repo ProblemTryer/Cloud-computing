@@ -11,15 +11,15 @@ columns = ['cow_id', 'activity', 'model', 'observation_time', 'server_time', 'lo
 def data_cleaning(file_dict, f_name, save):
     df = pd.read_excel(file_dict + f_name, index_col=0, engine='openpyxl')
     size = len(df)
-    df = df.drop(labels=['id', 'cow_id'])
+    # df = df.drop(labels=['Unnamed: 7', 'Unnamed: 8', 'Unnamed: 9'])
     df = df.dropna(subset=['activity'])
     print(f'Clean file {f_name}, size={len(df)}, original size={size}')
     plt.title(f_name)
-    df[['activity']].plot.hist(bins=50)
-    plt.savefig(file_dict + './pic/' + f_name + '.jpg')
+    df[['activity']].boxplot()
+    plt.savefig('./pic/' + f_name.replace('.xlsx', '') + '.jpg')
+    plt.show()
     if save:
         df.to_csv(file_dict + '/project_clean/')
-
 
 
 if __name__ == '__main__':
